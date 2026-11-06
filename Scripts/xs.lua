@@ -11,6 +11,12 @@ local str1
 local str2
 local sha ={}
 
+-- Fecha a janela do ajudante (item "close" da lista e botao do adapter)
+local function CloseHelperWindow()
+	fromA:Hide()
+	isShowing = false
+end
+
 -- Alterna a janela do ajudante (usado pela tecla P e pelo botao do adapter)
 local function ToggleHelperWindow()
 	if isShowing == true then
@@ -33,6 +39,11 @@ function CK:registerWithAdapter()
 	adp:register(T("显示辅助"), T("打开面板"),
 		function()
 			ToggleHelperWindow()
+		end
+	)
+	adp:register(T("显示辅助"), T("关闭面板"),
+		function()
+			CloseHelperWindow()
 		end
 	)
 end
@@ -192,6 +203,8 @@ function XS:open()
 	item.title = "cancel";
 	local item = list:AddItemFromPool();
 	item.title = "Group";
+	local item = list:AddItemFromPool();
+	item.title = "close";
 	if CS.XiaWorld.WalkTraderData.FirstComeDay == 19 then
 	local item = list:AddItemFromPool();
 	item.title = "easter egg";
@@ -274,6 +287,8 @@ function ClickList(context)
 			HuitxteText.text="交流QQ群：261811872"
 			--print("1")
 		end
+	elseif txt=="close" then
+		CloseHelperWindow()
 	elseif txt=="easter egg" then
 		wp1()
 	elseif txt=="custom" then 
